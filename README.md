@@ -75,6 +75,6 @@ The following steps outline the installation of tiller on our EKS cluster:
 ## Accessing Drone
 1. `cd` into the [terraform](./terraform/) directory and run `terraform outputs`. This will return the hostname of the elastic load balancer.
 1. Drone should now be accessible via the load balancer hostname.
-1. **Extra** : Feel free to create a CNAME so you can access drone at user-friendly URL.
+1. Create a CNAME so you can access drone at the URL we specified earlier.
 
 ## Danke!
