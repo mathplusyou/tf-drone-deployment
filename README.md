@@ -5,13 +5,13 @@ drone service will be provisioned with terraform.
 
 ## Table of Contents
 
-1. EKS Cluster Deployment Pre-reqs<a name="EKS Cluster Deployment Pre-reqs"></a>
-1. Deploying an EKS Cluster with Terraform<a name=" Deploying an EKS Cluster with Terraform"></a>
-1. Installing/Configuring Helm<a name="Installing and Configuring Helm"></a>
-1. Deploying Drone with Helm <a name="Deploying Drone with Helm"></a>
+1. [EKS Cluster Deployment Pre-reqs](#eks-cluster-deployment-pre-reqs)
+1. [Deploying an EKS Cluster with Terraform](#deploying-an-eks-cluster-with-terraform)
+1. [Installing/Configuring Helm](#installing-and-configuring-helm)
+1. [Deploying Drone with Helm](#deploying-drone-with-helm)
 
 
-## EKS Cluster Deployment Pre-reqs(#EKS-Cluster-Deployment-Pre-reqs)
+## EKS Cluster Deployment Pre-reqs<a name="eks-cluster-deployment-pre-reqs"></a>
 There are some things we'll need to do before we can  deploy an EKS cluster with terraform.
 
 ### 1. Clone this Repo
@@ -37,7 +37,7 @@ The [terraform eks module](https://github.com/terraform-aws-modules/terraform-aw
 1. Edit the bucket used for remote state in [main.tf](./terraform/main.tf)
 >__**NOTE**__: For demo purposes, keeping your terraform state local is fine.
 
-## EKS Cluster Deployment(#Deploying-an-EKS-Cluster-with-Terraform)
+## EKS Cluster Deployment<a name="deploying-an-eks-cluster-with-terraform"></a>
 
 `cd`into the [terraform](./terraform/) directory and run the following commands:
 1. `terraform init`
@@ -48,9 +48,9 @@ The [terraform eks module](https://github.com/terraform-aws-modules/terraform-aw
 ### 1. Configuring kubectl
 After the terraform apply is finished, a kubeconfig file `kubeconfig_<env>-<workspace>-cluster` will be generated in the [terraform](./terraform/) directory. We need to set the apppropriate context, so that the kubectl client will be able to interact with the eks cluster we spun up. Follow the steps outlined below to configure kubectl:
 
-1. Run `export KUBE_CONFIG=/full/path/to/kubeconfig_<env>-<workspace>-cluster`
+1. Run `export KUBECONFIG=/full/path/to/kubeconfig_<env>-<workspace>-cluster`
 
-### Creating a Service Account and Cluster Role Bindings for Tiller
+### 2. Creating a Service Account and Cluster Role Bindings for Tiller
 Now that we've configured kubectl, we can create kubernetes resources that Helm needs.
 
 1. ``cd`` into the [k8s](./k8s/) directory.
@@ -58,15 +58,15 @@ Now that we've configured kubectl, we can create kubernetes resources that Helm 
 
 This command will create a Service Account and Cluser Role Binding for Tiller that will allow it to deploy kubernetes resources.
 
-### Installing Helm(#Installing-and-Configuring-Helm)
+### 3. Installing Helm<a name="installing-and-configuring-helm"></a>
 Follow the steps outlined in this [here](https://github.com/helm/helm/blob/master/docs/install.md) to install helm on your workstation. Tiller will be installed after the eks cluster is deployed.
 
-### Install Tiller on  the EKS Cluster
+### 4. Install Tiller on  the EKS Cluster
 The following steps outline the installation of tiller on our EKS cluster:
 1. Run `export KUBE_CONFIG=/full/path/to/kubeconfig_<env>-<workspace>-cluster`
 1. Run `helm init`
 
-## Deploying Drone with Helm(#Deploying-Drone-with-Helm)
+## Deploying Drone with Helm<a name="deploying-drone-with-helm"></a>
 
 1. `cd` into the [helm](./helm/) directory.
 1. Populate [values.yaml](./helm/values.yaml) file with the necessary information.
