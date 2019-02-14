@@ -1,0 +1,16 @@
+service:
+  # Leave this port service definition alone. The load balancer being created via the terraform aws provider
+  # is load balancing to this port on the kubernetes worker asg.
+  type: NodePort
+  nodePort: 30080
+  targetPort: 80
+server:
+  # This is the url that you'd like to reach drone at. It must match the url provided to the github oauth app
+  host: "http://drone-url"
+  env:
+    DRONE_PROVIDER: "github"
+    DRONE_OPEN: "false"
+    DRONE_GITHUB: "true"
+    DRONE_ADMIN: "github_username"
+    DRONE_GITHUB_CLIENT: "github oauth app client id"
+    DRONE_GITHUB_SECRET: "github oauth app secret"
