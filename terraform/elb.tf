@@ -48,15 +48,16 @@ resource "aws_autoscaling_attachment" "drone" {
   autoscaling_group_name = "${module.eks.workers_asg_names[0]}"
   elb                    = "${aws_elb.drone.id}"
 }
+
 output "crontupisto" {
   value = "${module.eks.cluster_security_group_id}"
 }
 
 resource "aws_security_group_rule" "allow_lb" {
-  type = "ingress"
-  from_port = 30080
-  to_port = 30080
-  protocol = "tcp"
+  type                     = "ingress"
+  from_port                = 30080
+  to_port                  = 30080
+  protocol                 = "tcp"
   source_security_group_id = "${aws_security_group.drone_elb.id}"
 
   security_group_id = "${module.eks.worker_security_group_id}"
